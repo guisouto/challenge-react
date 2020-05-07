@@ -1,17 +1,16 @@
 import React from 'react';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import './App.css';
 import "./styles/global.css";
 
-import Header from './components/header';
-import Footer from './components/footer';
 import Routes from './routes';
 
 function App() {
   return (
     <div className="App">
-      {/* <Header /> */}
       <Routes />
-      {/* <Footer /> */}
     </div>
   );
 }
