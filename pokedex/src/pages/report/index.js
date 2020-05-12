@@ -10,7 +10,7 @@ class Report extends Component {
         return (
             <React.Fragment>
                 <NavBar />
-                <div className="container">
+                <div className="reportContainer">
                     <Dashboard />
                 </div>
             </React.Fragment>

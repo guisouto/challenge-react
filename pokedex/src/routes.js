@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import Login from './pages/login';
 import Report from './pages/report'
+import Pokemon from './pages/pokemon';
 import { isAuthenticated } from "./services/auth";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -23,6 +24,7 @@ const Routes = () => (
         <Switch>
             <Route exact path="/" component={Login} />
             <PrivateRoute path="/app" component={Report} />
+            <PrivateRoute path="/pokemon/:pokemonIndex" component={Pokemon} />
             <Route path="*" component={() => <h1>Page not found</h1>} />
         </Switch>
     </BrowserRouter>

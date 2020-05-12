@@ -5,42 +5,69 @@ import PokemonCard from './PokemonCard';
 
 export default class PokemonList extends Component {
     state = {
-        pokemon: null
+        pokemon: [],
+        previousPage: "",
+        nextPage: ""
     };
 
     //executar assim que o component for carregado
     componentDidMount(){
-        this.loadPokemons();
+        const url = "pokemon/";
+        this.loadPokemons(url);
     }
 
-    loadPokemons = async () => {
-        const response = await pokeapi.get();
+    loadPokemons = async (url) => {
 
-        const { results } = response.data;
+        const response = await pokeapi.get(`${url}`);
 
-        this.setState({ pokemon: results });
+        const { results, next, previous } = response.data;
+
+        this.setState({ pokemon: results, previousPage: previous, nextPage: next });
     };
 
+    prevPage = () => {
+        const { previousPage } = this.state;
+
+        if(previousPage === null) return;
+
+        this.loadPokemons(previousPage);
+    }
+
+    nextPage = () => {
+        const { nextPage } = this.state;
+        
+        if(nextPage === null) return;
+
+        this.loadPokemons(nextPage);
+    }
+
     render() {
+        const { previousPage, nextPage } = this.state; 
         return (
-            <React.Fragment>
+            <div>
             {
-            this.state.pokemon ? (
-                <div className="row">
-                    { this.state.pokemon.map((pokemon, index) => (
-                        <PokemonCard 
-                            key={index}
-                            name={pokemon.name}
-                            url={pokemon.url}
-                            pokemonIndex={index}
-                        />
-                        ))
-                    }
+             this.state.pokemon.length > 0 ? (
+                <div>
+                    <div className="row">
+                        { this.state.pokemon.map((pkm, index) => (
+                            <PokemonCard 
+                                key={index}
+                                name={pkm.name}
+                                url={pkm.url}
+                                pokemonIndex={index}
+                            />
+                            ))
+                        }
+                    </div>
+                    <div className="actions">
+                        <button disabled={previousPage === null}  onClick={this.prevPage}>Anterior</button>
+                        <button disabled={nextPage === null} onClick={this.nextPage}>Próximo</button>
+                    </div>
                 </div>
                 ) : (
                 <h1>Loading</h1>)
             }
-            </React.Fragment>
+            </div>
         )
     }
 }
