@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import NavBar from '../../components/layout/NavBar';
 import PokemonDetails from '../../components/pokemon/PokemonDetails';
 
+import './styles.css'
+
 export default class index extends Component {
     state = {
         pokemonIndex: ''

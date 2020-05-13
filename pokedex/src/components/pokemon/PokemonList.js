@@ -1,7 +1,34 @@
 import React, { Component } from 'react'
 import pokeapi from '../../services/pokeapi';
+import styled from 'styled-components';
 
 import PokemonCard from './PokemonCard';
+
+const DivButtons = styled.div`
+    display: flex;
+    justify-content: space-between;
+    button {
+        padding: 10px;
+        border-radius: 5px;
+        border: 0;
+        background: #fc6963;
+        color: #FFF;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        &:disabled{
+            opacity: 0.5;
+            cursor:default;
+            &:hover{
+                opacity: 0.5;
+            }
+        }
+        &:hover{
+            opacity: 0.7;
+        }
+    }
+`;
+//bl
 
 export default class PokemonList extends Component {
     state = {
@@ -44,30 +71,29 @@ export default class PokemonList extends Component {
     render() {
         const { previousPage, nextPage } = this.state; 
         return (
-            <div>
+            <React.Fragment>
             {
              this.state.pokemon.length > 0 ? (
-                <div>
+                <React.Fragment>
                     <div className="row">
-                        { this.state.pokemon.map((pkm, index) => (
+                        { this.state.pokemon.map((pkm) => (
                             <PokemonCard 
-                                key={index}
+                                key={pkm.name}
                                 name={pkm.name}
                                 url={pkm.url}
-                                pokemonIndex={index}
                             />
                             ))
                         }
                     </div>
-                    <div className="actions">
+                    <DivButtons>
                         <button disabled={previousPage === null}  onClick={this.prevPage}>Anterior</button>
                         <button disabled={nextPage === null} onClick={this.nextPage}>Próximo</button>
-                    </div>
-                </div>
+                    </DivButtons>
+                </React.Fragment>
                 ) : (
                 <h1>Loading</h1>)
             }
-            </div>
+            </React.Fragment>
         )
     }
 }
