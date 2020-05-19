@@ -120,7 +120,6 @@ export default class PokemonDetails extends Component {
         
         // Get Pokemon Description .... Is from a different end point uggh
         await pokeapi.get(`pokemon-species/${pokemonIndex}/`).then(res => {
-            console.log(res.data.flavor_text_entries);
             let description = '';
             res.data.flavor_text_entries.some(flavor => {
             if (flavor.language.name === 'en') {

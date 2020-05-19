@@ -1,12 +1,65 @@
 import React, { Component } from 'react';
+import pokeapi from '../../services/pokeapi';
 
 import NavBar from '../../components/layout/NavBar';
 import DragAndDrop from '../../components/layout/DragAndDrop';
 import RangeSlider from '../../components/layout/RangeSlider';
+
+import Select from "react-dropdown-select";
+
 import './styles.css';
 
+const TYPE_COLORS = {
+    bug: '#B1C12E',
+    dark: '#4F3A2D',
+    dragon: '#755EDF',
+    electric: '#FCBC17',
+    fairy: '#F4B1F4',
+    fighting: '#823551D',
+    fire: '#E73B0C',
+    flying: '#A3B3F7',
+    ghost: '#6060B2',
+    grass: '#74C236',
+    ground: '#D3B357',
+    ice: '#A3E7FD',
+    normal: '#C8C4BC',
+    poison: '#934594',
+    psychic: '#ED4882',
+    rock: '#B9A156',
+    steel: '#B5B5C3',
+    water: '#3295F6'
+  };
 
 export default class insertPokemon extends Component {
+    state = { 
+        types: [{
+            key: '',
+            value: '',
+            label: '',
+            color: ''
+        }],
+        themeColor: '#EF5350'
+    }
+
+    componentDidMount() {
+        const url = "type?limit=18";
+        this.loadPokemonType(url);
+    }
+
+    loadPokemonType = async (url) => {
+
+        const response = await pokeapi.get(`${url}`);
+        const { results } = response.data;
+        
+        let types = []
+
+        results.map((type, index) => (
+            types.push({ key: index, value: type.name, label: type.name, color: TYPE_COLORS[type.name] })
+        ));
+
+        this.setState({ types });
+    };
+
     render() {
         return (
             <React.Fragment>
@@ -20,26 +73,13 @@ export default class insertPokemon extends Component {
                                             <h5>Número</h5>
                                         </div>
                                         <div className="col-md-7">
-                                            <div style={{display: "flex"}}>
-                                                <div className="col-md-6 form-group">
-                                                <label htmlFor="sel1">Type:</label>
-                                                    <select className="form-control" id="sel1">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                    </select>
-                                                </div>
-                                                <div className="col-md-6 form-group">
-                                                <label htmlFor="sel2">Type2:</label>
-                                                    <select className="form-control" id="sel2">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                                            <Select
+                                                options={this.state.types}
+                                                label="Type"
+                                                isMulti
+                                                styles={colourStyles}
+                                                onChange={(value) => console.log(value)}
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -128,19 +168,19 @@ export default class insertPokemon extends Component {
                                                     <h6 className="float-right">Height:</h6>
                                                 </div>
                                                 <div className="col-6">
-                                                    <h6 className="float-left"> m.</h6>
+                                                    <input className="form-control float-left" id="height" placeholder="(m)"/>
                                                 </div>
                                                 <div className="col-6">
                                                     <h6 className="float-right">Weight:</h6>
                                                 </div>
                                                 <div className="col-6">
-                                                    <h6 className="float-left"> kg</h6>
+                                                    <input className="form-control float-left" id="weight" placeholder="(kg)"/>
                                                 </div>
                                                 <div className="col-6">
                                                     <h6 className="float-right">Catch Rate:</h6>
                                                 </div>
                                                 <div className="col-6">
-                                                    <h6 className="float-left"> %</h6>
+                                                    <input className="form-control float-left" id="catchRate" placeholder="(%)"/>
                                                 </div>
                                                 <div className="col-6">
                                                     <h6 className="float-right">Gender Ratio:</h6>
@@ -157,25 +197,25 @@ export default class insertPokemon extends Component {
                                                     <h6 className="float-right">Egg Groups:</h6>
                                                 </div>
                                                 <div className="col-6">
-                                                    <h6 className="float-left text-capitalize"> text </h6>
+                                                    <input className="form-control float-left" id="eggGroups"/>
                                                 </div>
                                                 <div className="col-6">
                                                     <h6 className="float-right">Hatch Steps:</h6>
                                                 </div>
                                                 <div className="col-6">
-                                                    <h6 className="float-left"> text</h6>
+                                                    <input className="form-control float-left" id="hatchSteps"/>
                                                 </div>
                                                 <div className="col-6">
                                                     <h6 className="float-right">Abilities:</h6>
                                                 </div>
                                                 <div className="col-6">
-                                                    <h6 className="float-left text-capitalize"> text </h6>
+                                                    <input className="form-control float-left" id="abilities"/>
                                                 </div>
                                                 <div className="col-6">
                                                     <h6 className="float-right">EVs:</h6>
                                                 </div>
                                                 <div className="col-6">
-                                                    <h6 className="float-left text-capitalize"> text </h6>
+                                                    <input className="form-control float-left" id="evs"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -183,7 +223,7 @@ export default class insertPokemon extends Component {
                                 </div>
 
                                 <div className="card-footer text-muted">
-                                    Data From My Head
+                                    <button>Adicionar</button>
                                 </div>
                             </div>
                         </form>
