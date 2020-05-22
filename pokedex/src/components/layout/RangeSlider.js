@@ -30,14 +30,26 @@ const SliderInput = styled.input`
 `
 
 export default class RangeSlider extends Component {
-    sliderRef = React.createRef();
-    valueRef = React.createRef();
+    constructor(props) {
+        super(props);
+        this.sliderRef = React.createRef();
+        this.sliderInputCase = this.sliderInputCase.bind(this);
+        this.state = { value: '' };
+    }
+
+    componentDidMount(){
+        this.setState({ value: this.sliderRef.current.value });
+    }
+
+    sliderInputCase() {
+        this.setState({ value: this.sliderRef.current.value });
+    }
 
     render() {
         return (
             <div style={{width: "100%", display:"flex", alignItems:"center"}}>
-                <SliderInput type="range" min="1" max="100" id="myRange" ref={this.sliderRef}/>
-                <span id="rangeValue">10</span>
+                <SliderInput type="range" min="1" max="100" id="myRange" name={this.props.name} ref={this.sliderRef} onClick={this.sliderInputCase}/>
+                <span id="rangeValue" name="rangeValue">{ this.state.value }</span>
             </div>      
         )
     }
