@@ -3,9 +3,11 @@ import pokeapi from '../../services/pokeapi';
 import {createPokemon} from '../../services/pokemon'
 
 import NavBar from '../../components/layout/NavBar';
-import DragAndDrop from '../../components/layout/DragAndDrop';
 import RangeSlider from '../../components/layout/RangeSlider';
 import DropdownPokemonType from '../../components/layout/DropdownPokemonType';
+import Previews from  '../../components/layout/Dropzone';
+
+//react-toast-notifications
 
 import './styles.css';
 
@@ -83,13 +85,19 @@ export default class insertPokemon extends Component {
         this.setState({ types });
     };
 
-    handleSubmit(event) {
+    handleSubmit = async event =>{
+        event.preventDefault();
+        
+        const { image, type } = this.state.pokemon;
+
         const data = new FormData(event.target);
+
+        let genderRatio = parseInt(data.get('genderRatio'));
 
         let pokemon = {
             number: data.get('number'),
-            type: data.get('types'),
-            image: '',
+            type: type,
+            image: image,
             name: data.get('name'),
             stats: {
                 hp: data.get('hp'),
@@ -104,13 +112,20 @@ export default class insertPokemon extends Component {
             eggGroups: data.get('eggGroups'),
             catchRate: data.get('catchRate'),
             abilities: data.get('abilities'),
-            genderRatio: data.get('genderRatio'),
+            genderRatio: genderRatio / 12.5,
             evs: data.get('evs'),
             hatchSteps: data.get('hatchSteps')
         }
 
         createPokemon(pokemon);
-        event.preventDefault();
+    }
+
+    callbackImageUrl = (imageUrl)  => {
+        this.state.pokemon.image = imageUrl;
+    }
+
+    callbackTypes = (types) => {
+        this.state.pokemon.type = types;
     }
 
     render() {
@@ -128,6 +143,7 @@ export default class insertPokemon extends Component {
                                         <div className="col-md-7 text-capitalize">
                                             <DropdownPokemonType 
                                                 options={this.state.types}
+                                                callbackFromParent={this.callbackTypes}
                                             />
                                         </div>
                                     </div>
@@ -136,7 +152,7 @@ export default class insertPokemon extends Component {
                                 <div className="card-body">
                                     <div className="row align-items-center">
                                         <div className="col-md-3">
-                                            <DragAndDrop/>
+                                            <Previews callbackFromParent={this.callbackImageUrl} />
                                         </div>
                                         <div className="col-md-9">
                                             <div className="row align-items-center">

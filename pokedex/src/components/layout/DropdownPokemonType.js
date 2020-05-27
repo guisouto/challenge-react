@@ -52,6 +52,15 @@ const colourStyles = {
 };
 
 export default class DropdownPokemonType extends Component {
+    state = {
+        selectedOptions: [],
+    }
+    
+    handleChange = (selectedOptions) => {
+        this.props.callbackFromParent(selectedOptions);
+        this.setState({ selectedOptions });
+    }
+
     render() {
         return (
             <React.StrictMode>
@@ -59,7 +68,7 @@ export default class DropdownPokemonType extends Component {
                     isMulti
                     options={this.props.options}
                     styles={colourStyles}
-                    name='types'
+                    onChange={this.handleChange}
                 />
             </React.StrictMode>
         )

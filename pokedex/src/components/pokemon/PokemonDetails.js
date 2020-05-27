@@ -128,10 +128,12 @@ export default class PokemonDetails extends Component {
             }
         });
 
+        //The chance of this Pokémon being female, in eighths; or -1 for genderless.
+        //100 / 8 = 12.5
         const femaleRate = res.data['gender_rate'];
         const genderRatioFemale = 12.5 * femaleRate;
         const genderRatioMale = 12.5 * (8 - femaleRate);
-  
+
         const catchRate = Math.round((100 / 255) * res.data['capture_rate']);
   
         const eggGroups = res.data['egg_groups']
