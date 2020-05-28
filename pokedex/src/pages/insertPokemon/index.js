@@ -118,6 +118,8 @@ export default class insertPokemon extends Component {
         }
 
         createPokemon(pokemon);
+
+        this.props.history.push("/app");
     }
 
     callbackImageUrl = (imageUrl)  => {

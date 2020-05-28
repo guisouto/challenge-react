@@ -15,3 +15,12 @@ export const createPokemon = pokemon => {
 
     localStorage.setItem(POKEMON, JSON.stringify(pokemons));
 };
+
+export const deletePokemon = pokemon => {
+
+    let localpokemons = JSON.parse(localStorage.getItem(POKEMON));
+
+    localpokemons.splice(pokemon);
+
+    localStorage.setItem(POKEMON, JSON.stringify(localpokemons));
+}

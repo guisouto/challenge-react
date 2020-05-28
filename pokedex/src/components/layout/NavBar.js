@@ -12,6 +12,7 @@ export default class NavBar extends Component {
                 <nav className="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
                    <a href="/app" className="navbar-brand col-sm-3 col-md-2 mr-0 align-items-center">Pokedex</a> 
                    <a href="/insertPokemon" className="navbar-brand col-sm-3 col-md-2 mr-0 align-items-center">Insert Pokemon</a> 
+                   <a href="/customPokemonList" className="navbar-brand col-sm-3 col-md-2 mr-0 align-items-center">Custom Pokemon List</a> 
                 </nav>
             </DivNavBar>
         )
