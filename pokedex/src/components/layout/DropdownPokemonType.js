@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Select from "react-select";
+import BaseSelect from "react-select";
 import chroma from 'chroma-js';
+import FixRequiredSelect from './FixRequiredSelect';
 
 const colourStyles = {
     control: styles => ({ ...styles, backgroundColor: 'white' }),
@@ -51,6 +52,13 @@ const colourStyles = {
     }),
 };
 
+const Select = props => (
+    <FixRequiredSelect
+        {...props}
+        SelectComponent={BaseSelect}
+    />
+);
+
 export default class DropdownPokemonType extends Component {
     state = {
         selectedOptions: [],
@@ -69,6 +77,7 @@ export default class DropdownPokemonType extends Component {
                     options={this.props.options}
                     styles={colourStyles}
                     onChange={this.handleChange}
+                    required
                 />
             </React.StrictMode>
         )

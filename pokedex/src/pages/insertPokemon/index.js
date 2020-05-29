@@ -140,7 +140,7 @@ export default class insertPokemon extends Component {
                                 <div className="card-header">
                                     <div className="row">
                                         <div className="col-md-5">
-                                            <input className="form-control" name="number" placeholder="Enter number"/>
+                                            <input className="form-control" name="number" required placeholder="Enter number"/>
                                         </div>
                                         <div className="col-md-7 text-capitalize">
                                             <DropdownPokemonType 
@@ -162,7 +162,7 @@ export default class insertPokemon extends Component {
                                                     Name
                                                 </div>
                                                 <div className="col-12 col-md-9">
-                                                    <input className="form-control" name="name" placeholder="Enter name"/>
+                                                    <input className="form-control" name="name" required placeholder="Enter name"/>
                                                 </div>
                                             </div>
                                             <div className="row align-items-center">
@@ -224,7 +224,7 @@ export default class insertPokemon extends Component {
                                     <div className="row mt-1">
                                         <div className="col">
                                             <label htmlFor="comment">Description:</label>
-                                            <textarea className="form-control" rows="5" id="description" name="description" ></textarea>
+                                            <textarea className="form-control" rows="5" id="description" name="description" required ></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -239,19 +239,19 @@ export default class insertPokemon extends Component {
                                                     <h6 className="float-right">Height:</h6>
                                                 </div>
                                                 <div className="col-6 pb-1">
-                                                    <input className="form-control float-left" id="height" name="height" placeholder="(m)"/>
+                                                    <input className="form-control float-left" id="height" name="height" placeholder="(m)" required/>
                                                 </div>
                                                 <div className="col-6 pb-1">
                                                     <h6 className="float-right">Weight:</h6>
                                                 </div>
                                                 <div className="col-6 pb-1">
-                                                    <input className="form-control float-left" id="weight" name="weight" placeholder="(kg)"/>
+                                                    <input className="form-control float-left" id="weight" name="weight" placeholder="(kg)" required/>
                                                 </div>
                                                 <div className="col-6 pb-1">
                                                     <h6 className="float-right">Catch Rate:</h6>
                                                 </div>
                                                 <div className="col-6 pb-1">
-                                                    <input className="form-control float-left" id="catchRate" name="catchRate" placeholder="(%)"/>
+                                                    <input className="form-control float-left" id="catchRate" name="catchRate" placeholder="(%)" required/>
                                                 </div>
                                                 <div className="col-6 pb-1">
                                                     <h6 className="float-right">Gender Ratio:</h6>
@@ -269,25 +269,25 @@ export default class insertPokemon extends Component {
                                                     <h6 className="float-right">Egg Groups:</h6>
                                                 </div>
                                                 <div className="col-6 pb-1">
-                                                    <input className="form-control float-left" id="eggGroups" name="eggGroups"/>
+                                                    <input className="form-control float-left" id="eggGroups" name="eggGroups" required/>
                                                 </div>
                                                 <div className="col-6 pb-1">
                                                     <h6 className="float-right">Hatch Steps:</h6>
                                                 </div>
                                                 <div className="col-6 pb-1">
-                                                    <input className="form-control float-left" id="hatchSteps" name="hatchSteps"/>
+                                                    <input className="form-control float-left" id="hatchSteps" name="hatchSteps" required/>
                                                 </div>
                                                 <div className="col-6 pb-1">
                                                     <h6 className="float-right">Abilities:</h6>
                                                 </div>
                                                 <div className="col-6 pb-1">
-                                                    <input className="form-control float-left" id="abilities" name="abilities"/>
+                                                    <input className="form-control float-left" id="abilities" name="abilities" required/>
                                                 </div>
                                                 <div className="col-6 pb-1">
                                                     <h6 className="float-right">EVs:</h6>
                                                 </div>
                                                 <div className="col-6 pb-1">
-                                                    <input className="form-control float-left" id="evs" name="evs"/>
+                                                    <input className="form-control float-left" id="evs" name="evs" required/>
                                                 </div>
                                             </div>
                                         </div>

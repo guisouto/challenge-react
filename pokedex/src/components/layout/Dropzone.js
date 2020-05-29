@@ -40,7 +40,7 @@ class Previews extends Component {
               preview: URL.createObjectURL(file)
           }));
 
-          this.props.callbackFromParent(files[0].preview);
+          this.props.callbackFromParent(files[0]);
 
           this.setState({files})
         };
@@ -75,7 +75,7 @@ class Previews extends Component {
         ));
     
         return (
-          <Dropzone onDrop={this.onDrop} accept="image/*" > 
+          <Dropzone onDrop={this.onDrop} accept="image/*" minSize={1} > 
             {({getRootProps, getInputProps}) => (
               <section style={{borderStyle:"dashed", borderColor:"#fc6963"}}>
                 <div {...getRootProps({className: 'dropzone'})}>

@@ -28,7 +28,6 @@ const DivButtons = styled.div`
         }
     }
 `;
-//bl
 
 export default class PokemonList extends Component {
     state = {
