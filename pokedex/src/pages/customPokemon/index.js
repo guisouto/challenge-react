@@ -1,21 +1,38 @@
-import React, { Component } from 'react'
-import NavBar from '../../components/layout/NavBar'
-import CustomPokemonList from '../../components/pokemon/CustomPokemonList'
+import React, { Component } from 'react';
 
-import "./styles.css";
+import NavBar from '../../components/layout/NavBar';
+import CustomPokemonDetails from '../../components/pokemon/CustomPokemonDetails';
 
-export default class customPokemon extends Component {
+import './styles.css'
+
+export default class index extends Component {
+    state = {
+        pokemonIndex: ''
+    }
+
+    componentDidMount(){
+        //Get index to url
+        const {pokemonIndex} = this.props.match.params;
+
+        this.setState({pokemonIndex});
+    }
+
     render() {
         return (
             <React.Fragment>
-                <NavBar/>
-                <div className="customContainer">
-                    <div className="row">
-                        <div className="col">
-                            <CustomPokemonList/>
-                        </div>
+            {
+            this.state.pokemonIndex ? (
+                <React.Fragment>
+                    <NavBar />
+                    <div className="customPokemonContainer">
+                        <CustomPokemonDetails  
+                            pokemonIndex={this.state.pokemonIndex}
+                        />
                     </div>
-                </div>
+                </React.Fragment>
+                ) : (
+                <h1>Loading</h1>)
+            }
             </React.Fragment>
         )
     }

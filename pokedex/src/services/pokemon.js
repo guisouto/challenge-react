@@ -5,7 +5,7 @@ export const getPokemon = () => JSON.parse(localStorage.getItem(POKEMON));
 export const getPokemonById = id => {
     let localpokemons = JSON.parse(localStorage.getItem(POKEMON));
 
-    return localpokemons.map(pkm => pkm.number == id);
+    return localpokemons.find(pkm => pkm.number == id);
 }
 
 export const createPokemon = pokemon => {

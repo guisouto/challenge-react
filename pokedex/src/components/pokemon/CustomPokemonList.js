@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { getPokemon } from '../../services/pokemon';
-import styled from 'styled-components';
 
 import CustomPokemonCard from './CustomPokemonCard';
 
@@ -20,6 +19,10 @@ export default class CustomPokemonList extends Component {
         this.setState({ pokemon: response });
     };
 
+    callbackDeletePokemon = (pokemonIndex) => {
+        
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -33,6 +36,7 @@ export default class CustomPokemonList extends Component {
                                 name={pkm.name}
                                 number={pkm.number}
                                 url={pkm.image}
+                                callbackFromParent={this.callbackDeletePokemon}
                             />
                             ))
                         }

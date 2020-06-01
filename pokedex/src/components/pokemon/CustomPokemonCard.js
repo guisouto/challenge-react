@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 
+import {deletePokemon} from '../../services/pokemon';
+
 const Sprite = styled.img`
     width: 5em,
     height: 5em
@@ -31,6 +33,30 @@ const StyledLink = styled(Link)`
     }
 `;
 
+const DivButtons = styled.div`
+    display: flex;
+    justify-content: space-between;
+    button {
+        border-radius: 3px;
+        border: 0;
+        background: #fc6963;
+        color: #FFF;
+        font-size: 12px;
+        font-weight: bold;
+        cursor: pointer;
+        &:disabled{
+            opacity: 0.5;
+            cursor:default;
+            &:hover{
+                opacity: 0.5;
+            }
+        }
+        &:hover{
+            opacity: 0.7;
+        }
+    }
+`;
+
 export default class CustomPokemonCard extends Component {
     state = {
         name: '',
@@ -44,12 +70,16 @@ export default class CustomPokemonCard extends Component {
         this.setState({name, imageUrl, pokemonIndex: number});
     }
 
+    removePokemon() {
+        this.props.callbackFromParent(this.state.pokemonIndex);
+    }
+
     render() {
 
         return (
-            <div>
-                <StyledLink to={`pokemon/${this.state.pokemonIndex}`}>
-                    <Card className="card">
+            <div className="col-md-3 col-sm-6 mb-5">
+                <Card className="card">
+                    <StyledLink to={`customPokemon/${this.state.pokemonIndex}`}>
                         <h5 className="card-header">{this.state.pokemonIndex}</h5>
                         <Sprite
                             className="card-img-top rounded mx-auto mt-2" 
@@ -58,9 +88,13 @@ export default class CustomPokemonCard extends Component {
                         <div className="card-body">
                             <h6 className="card-title text-capitalize">{this.state.name}</h6> 
                         </div>
-                    </Card>
-                </StyledLink>
-            </div>
+                    </StyledLink>
+                    <div className="card-footer text-muted">
+                        <button >Editar</button>
+                        <button onClick={this.removePokemon} >Excluir</button>
+                    </div>
+                </Card>
+        </div>
         )
     }
 }

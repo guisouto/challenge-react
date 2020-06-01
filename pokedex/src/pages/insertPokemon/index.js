@@ -107,6 +107,7 @@ export default class insertPokemon extends Component {
                 specialAttack: data.get('spAtk'),
                 specialDefense: data.get('spDef')
             },
+            description: data.get('description'),
             height: data.get('height'),
             weight: data.get('weight'),
             eggGroups: data.get('eggGroups'),

@@ -5,6 +5,7 @@ import Login from './pages/login';
 import Report from './pages/report'
 import Pokemon from './pages/pokemon';
 import InsertPokemon from './pages/insertPokemon';
+import reportCustomPokemon from './pages/reportCustomPokemon';
 import customPokemon from './pages/customPokemon';
 
 import { isAuthenticated } from "./services/auth";
@@ -29,7 +30,8 @@ const Routes = () => (
             <PrivateRoute path="/app" component={Report} />
             <PrivateRoute path="/pokemon/:pokemonIndex" component={Pokemon} />
             <PrivateRoute path="/insertPokemon/" component={InsertPokemon} />
-            <PrivateRoute path="/customPokemonList/" component={customPokemon} />
+            <PrivateRoute path="/customPokemonList/" component={reportCustomPokemon} />
+            <PrivateRoute path="/customPokemon/:pokemonIndex" component={customPokemon} />
             <Route path="*" component={() => <h1>Page not found</h1>} />
         </Switch>
     </BrowserRouter>
