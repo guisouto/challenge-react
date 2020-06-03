@@ -68,10 +68,16 @@ export default class CustomPokemonCard extends Component {
         const { name, url, number } = this.props;
         const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png`;
         this.setState({name, imageUrl, pokemonIndex: number});
+        //To have access to state and props
+        this.removePokemon = this.removePokemon.bind(this);
     }
 
     removePokemon() {
         this.props.callbackFromParent(this.state.pokemonIndex);
+    }
+
+    editPokemon() {
+
     }
 
     render() {
@@ -90,7 +96,7 @@ export default class CustomPokemonCard extends Component {
                         </div>
                     </StyledLink>
                     <div className="card-footer text-muted">
-                        <button >Editar</button>
+                        <button onClick={this.editPokemon} >Editar</button>
                         <button onClick={this.removePokemon} >Excluir</button>
                     </div>
                 </Card>

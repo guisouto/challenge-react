@@ -22,11 +22,14 @@ export const createPokemon = pokemon => {
     localStorage.setItem(POKEMON, JSON.stringify(pokemons));
 };
 
-export const deletePokemon = pokemon => {
-
+export const deletePokemonById = id => {
     let localpokemons = JSON.parse(localStorage.getItem(POKEMON));
 
-    localpokemons.splice(pokemon);
+    let pokemon = localpokemons.find(pkm => pkm.number == id)
+
+    let index = localpokemons.indexOf(pokemon);
+
+    localpokemons.splice(index, 1);
 
     localStorage.setItem(POKEMON, JSON.stringify(localpokemons));
 }

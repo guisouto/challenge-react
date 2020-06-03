@@ -38,6 +38,8 @@ export default class RangeSlider extends Component {
     }
 
     componentDidMount(){
+        console.log(this.props.editValue);
+
         this.setState({ value: this.sliderRef.current.value });
     }
 

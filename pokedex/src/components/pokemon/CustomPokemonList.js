@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { getPokemon } from '../../services/pokemon';
+import { getPokemon, deletePokemonById } from '../../services/pokemon';
 
 import CustomPokemonCard from './CustomPokemonCard';
 
@@ -20,7 +20,8 @@ export default class CustomPokemonList extends Component {
     };
 
     callbackDeletePokemon = (pokemonIndex) => {
-        
+        deletePokemonById(pokemonIndex);
+        this.loadPokemons();
     }
 
     render() {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import pokeapi from '../../services/pokeapi';
-import {createPokemon} from '../../services/pokemon'
+import {createPokemon, getPokemonById} from '../../services/pokemon'
 
 import NavBar from '../../components/layout/NavBar';
 import RangeSlider from '../../components/layout/RangeSlider';
@@ -41,6 +41,7 @@ export default class insertPokemon extends Component {
             color: ''
         }],
         themeColor: '#EF5350',
+        editMode: false,
         pokemon: {
             number: '',
             type: '',
@@ -56,11 +57,11 @@ export default class insertPokemon extends Component {
             },
             height: '',
             weight: '',
+            description: '',
             eggGroups: '',
             catchRate: '',
             abilities: '',
-            genderRatioMale: '',
-            genderRatioFemale: '',
+            genderRatio: '',
             evs: '',
             hatchSteps: '',
         }
@@ -69,6 +70,12 @@ export default class insertPokemon extends Component {
     componentDidMount() {
         const url = "type?limit=18";
         this.loadPokemonType(url);
+
+        const {pokemonIndex} = this.props.match.params;
+        
+        if(pokemonIndex !== undefined) {
+            this.loadPokemon(pokemonIndex);
+        }
     }
 
     loadPokemonType = async (url) => {
@@ -84,6 +91,42 @@ export default class insertPokemon extends Component {
 
         this.setState({ types });
     };
+
+    loadPokemon = (pokemonIndex) => {
+        this.state.editMode = true;
+        let pkm = getPokemonById(pokemonIndex);
+        
+        const types = pkm.type.map(type => type.value);
+
+        const themeColor = `${TYPE_COLORS[types[types.length - 1]]}`;
+
+        console.log(pkm.genderRatio);
+
+        this.setState({
+            pokemon : {
+                number: pkm.number,
+                types,
+                name: pkm.name,
+                stats: {
+                    hp: pkm.stats.hp,
+                    attack: pkm.stats.attack,
+                    defense: pkm.stats.defense,
+                    speed: pkm.stats.speed,
+                    specialAttack: pkm.stats.specialAttack,
+                    specialDefense: pkm.stats.specialDefense
+                },
+                height: pkm.height,
+                weight: pkm.weight,
+                description: pkm.description,
+                eggGroups: pkm.eggGroups,
+                catchRate: pkm.catchRate,
+                abilities: pkm.abilities,
+                genderRatio: pkm.genderRatio,
+                evs: pkm.evs,
+                hatchSteps: pkm.hatchSteps
+            }
+        })
+    }
 
     handleSubmit = async event =>{
         event.preventDefault();
@@ -141,7 +184,7 @@ export default class insertPokemon extends Component {
                                 <div className="card-header">
                                     <div className="row">
                                         <div className="col-md-5">
-                                            <input className="form-control" name="number" required placeholder="Enter number"/>
+                                            <input className="form-control" name="number" required placeholder="Enter number" defaultValue={this.state.pokemon.number} />
                                         </div>
                                         <div className="col-md-7 text-capitalize">
                                             <DropdownPokemonType 
@@ -163,7 +206,7 @@ export default class insertPokemon extends Component {
                                                     Name
                                                 </div>
                                                 <div className="col-12 col-md-9">
-                                                    <input className="form-control" name="name" required placeholder="Enter name"/>
+                                                    <input className="form-control" name="name" required placeholder="Enter name" defaultValue={this.state.pokemon.name}/>
                                                 </div>
                                             </div>
                                             <div className="row align-items-center">
@@ -225,7 +268,7 @@ export default class insertPokemon extends Component {
                                     <div className="row mt-1">
                                         <div className="col">
                                             <label htmlFor="comment">Description:</label>
-                                            <textarea className="form-control" rows="5" id="description" name="description" required ></textarea>
+                                            <textarea className="form-control" rows="5" id="description" name="description" required  defaultValue={this.state.pokemon.description}></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -240,26 +283,27 @@ export default class insertPokemon extends Component {
                                                     <h6 className="float-right">Height:</h6>
                                                 </div>
                                                 <div className="col-6 pb-1">
-                                                    <input className="form-control float-left" id="height" name="height" placeholder="(m)" required/>
+                                                    <input className="form-control float-left" id="height" name="height" placeholder="(m)" required defaultValue={this.state.pokemon.height}/>
                                                 </div>
                                                 <div className="col-6 pb-1">
                                                     <h6 className="float-right">Weight:</h6>
                                                 </div>
                                                 <div className="col-6 pb-1">
-                                                    <input className="form-control float-left" id="weight" name="weight" placeholder="(kg)" required/>
+                                                    <input className="form-control float-left" id="weight" name="weight" placeholder="(kg)" required defaultValue={this.state.pokemon.weight}/>
                                                 </div>
                                                 <div className="col-6 pb-1">
                                                     <h6 className="float-right">Catch Rate:</h6>
                                                 </div>
                                                 <div className="col-6 pb-1">
-                                                    <input className="form-control float-left" id="catchRate" name="catchRate" placeholder="(%)" required/>
+                                                    <input className="form-control float-left" id="catchRate" name="catchRate" placeholder="(%)" required defaultValue={this.state.pokemon.catchRate} />
                                                 </div>
                                                 <div className="col-6 pb-1">
                                                     <h6 className="float-right">Gender Ratio:</h6>
                                                 </div>
                                                 <div className="col-6 pb-1">
                                                     <RangeSlider
-                                                        name="genderRatio"/>
+                                                        name="genderRatio"
+                                                        editValue={this.state.pokemon.genderRatio}/>
                                                 </div>
                                             </div>
                                         </div>
@@ -270,25 +314,25 @@ export default class insertPokemon extends Component {
                                                     <h6 className="float-right">Egg Groups:</h6>
                                                 </div>
                                                 <div className="col-6 pb-1">
-                                                    <input className="form-control float-left" id="eggGroups" name="eggGroups" required/>
+                                                    <input className="form-control float-left" id="eggGroups" name="eggGroups" required defaultValue={this.state.pokemon.eggGroups}/>
                                                 </div>
                                                 <div className="col-6 pb-1">
                                                     <h6 className="float-right">Hatch Steps:</h6>
                                                 </div>
                                                 <div className="col-6 pb-1">
-                                                    <input className="form-control float-left" id="hatchSteps" name="hatchSteps" required/>
+                                                    <input className="form-control float-left" id="hatchSteps" name="hatchSteps" required defaultValue={this.state.pokemon.hatchSteps}/>
                                                 </div>
                                                 <div className="col-6 pb-1">
                                                     <h6 className="float-right">Abilities:</h6>
                                                 </div>
                                                 <div className="col-6 pb-1">
-                                                    <input className="form-control float-left" id="abilities" name="abilities" required/>
+                                                    <input className="form-control float-left" id="abilities" name="abilities" required defaultValue={this.state.pokemon.abilities} />
                                                 </div>
                                                 <div className="col-6 pb-1">
                                                     <h6 className="float-right">EVs:</h6>
                                                 </div>
                                                 <div className="col-6 pb-1">
-                                                    <input className="form-control float-left" id="evs" name="evs" required/>
+                                                    <input className="form-control float-left" id="evs" name="evs" required defaultValue={this.state.pokemon.evs}/>
                                                 </div>
                                             </div>
                                         </div>
@@ -296,7 +340,13 @@ export default class insertPokemon extends Component {
                                 </div>
 
                                 <div className="card-footer text-muted">
-                                    <button className="btn btn-outline-success" type="submit" >Adicionar</button>
+                                    {
+                                        this.state.editMode ? (
+                                            <button className="btn btn-outline-success" type="submit" >Editar</button>
+                                        ) : (
+                                            <button className="btn btn-outline-success" type="submit" >Adicionar</button>
+                                        )
+                                    } 
                                 </div>
                             </div>
                         </form>
